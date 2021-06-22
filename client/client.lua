@@ -6,7 +6,7 @@ func = Tunnel.getInterface("tikuida_rob")
 
 local andamento = false
 local segundos = 0
-local blip = nil
+local blip = {}
 
 CreateThread(function() 
     while true do
@@ -80,24 +80,24 @@ AddEventHandler("iniciandoroubo",function(x,y,z,secs,head)
 end)
 
 RegisterNetEvent('blip:criar:assalto')
-AddEventHandler('blip:criar:assalto',function(x,y,z, name)
-	if not DoesBlipExist(blip) then
-		blip = AddBlipForCoord(x,y,z)
-		SetBlipScale(blip,0.9)
-		SetBlipSprite(blip,272)
-		SetBlipColour(blip,59)
+AddEventHandler('blip:criar:assalto',function(user_id, x,y,z, name)
+	if not DoesBlipExist(blip[user_id]) then
+		blip[user_id] = AddBlipForCoord(x,y,z)
+		SetBlipScale(blip[user_id],0.9)
+		SetBlipSprite(blip[user_id],272)
+		SetBlipColour(blip[user_id],59)
 		BeginTextCommandSetBlipName("STRING")
 		AddTextComponentString("Assaltante a "..name)
-		EndTextCommandSetBlipName(blip)
-		SetBlipAsShortRange(blip,false)
-		SetBlipRoute(blip,true)
+		EndTextCommandSetBlipName(blip[user_id])
+		SetBlipAsShortRange(blip[user_id],false)
+		SetBlipRoute(blip[user_id],true)
 	end
 end)
 
 RegisterNetEvent('blip:remover:assalto')
-AddEventHandler('blip:remover:assalto',function()
-	if DoesBlipExist(blip) then
-		RemoveBlip(blip)
-		blip = nil
+AddEventHandler('blip:remover:assalto',function(user_id)
+	if DoesBlipExist(blip[user_id]) then
+		RemoveBlip(blip[user_id])
+		blip[user_id] = nil
 	end
 end)
