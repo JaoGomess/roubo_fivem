@@ -57,7 +57,7 @@ function func.checkRob(type, id, x, y, z, h, setup)
 						TriggerClientEvent("Notify", source, "sucesso", "Roubando")
 						TriggerClientEvent("iniciandoroubo", source, x, y, z, c.tempoRoubo, h)
 						vRPclient._playAnim(source,false,{{"anim@heists@ornate_bank@grab_cash_heels","grab"}},true)
-						avisarPolicia("Roubo em Andamento", "Assalto a "..type.." em andamento, verifique o ocorrido.", x, y, z, type)
+						avisarPolicia(user_id, "Roubo em Andamento", "Assalto a "..type.." em andamento, verifique o ocorrido.", x, y, z, type)
 
 					else
 						TriggerClientEvent("Notify", source, "negado", "Voce tentou roubar a "..type.." porem n obteve sucesso")
@@ -102,7 +102,7 @@ function func.stopRob()
 			local player = vRP.getUserSource(parseInt(w))
             if player then
 				async(function()
-					TriggerClientEvent('blip:remover:assalto',player)
+					TriggerClientEvent('blip:remover:assalto', player, user_id)
 					TriggerClientEvent("Notify", player, "sucesso", "O assaltante saiu correndo.")
 				end)
 			end
@@ -112,14 +112,14 @@ function func.stopRob()
 
 end
 
-function avisarPolicia(titulo, msg, x, y, z, name)
+function avisarPolicia(user_id, titulo, msg, x, y, z, name)
 	local policias = vRP.getUsersByPermission(config.permissao)
     for k, v in pairs(policias) do
         local player = vRP.getUserSource(parseInt(v))
         if player then
             async(
                 function()
-                    TriggerClientEvent("blip:criar:assalto", player, x, y, z, name)
+                    TriggerClientEvent("blip:criar:assalto", player, user_id, x, y, z, name)
                     vRPclient.playSound(player, "Oneshot_Final", "MP_MISSION_COUNTDOWN_SOUNDSET")
                     TriggerClientEvent("Notify", player, "sucesso", msg)
                 end
