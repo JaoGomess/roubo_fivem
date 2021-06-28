@@ -8,10 +8,10 @@ local andamento = false
 local segundos = 0
 local blip = {}
 
-CreateThread(function() 
+CreateThread(function()
+    local ped = PlayerPedId()
     while true do
         local sleep = 2000
-        local ped = PlayerPedId()
         local cds = GetEntityCoords(ped)
         for k, v in pairs(config.type) do
 			for k2, v2 in pairs(v.cds) do
@@ -42,15 +42,13 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-	while true do
+	while andamento do
 		Wait(1000)
-		if andamento then
-			segundos = segundos - 1
-			if segundos <= 0 then
-				andamento = false
-				ClearPedTasks(PlayerPedId())
-				TriggerEvent('cancelando',false)
-			end
+		segundos = segundos - 1
+		if segundos <= 0 then
+			andamento = false
+			ClearPedTasks(PlayerPedId())
+			TriggerEvent('cancelando',false)
 		end
 	end
 end)
