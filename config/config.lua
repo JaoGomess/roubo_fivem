@@ -1,7 +1,7 @@
 config = {}
 
 config.permissao = "policia.permissao" -- Permissão para avisar sobre os roubos
-config.tempo = "10" -- Determine após quanto tempo o jogador pode roubar aquele local novamente
+config.tempo = "10" -- Determine após quanto tempo o jogador pode roubar aquele local novamente (Em segundos)
 
 config.type= {
 	['ammunation'] = {
