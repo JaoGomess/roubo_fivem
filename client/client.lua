@@ -42,8 +42,9 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-	while andamento do
+	while true do
 		Wait(1000)
+	if andamento then
 		segundos = segundos - 1
 		if segundos <= 0 then
 			andamento = false
@@ -51,6 +52,7 @@ CreateThread(function()
 			TriggerEvent('cancelando',false)
 		end
 	end
+    end
 end)
 
 function drawTxt(text,font,x,y,scale,r,g,b,a)
